@@ -1,0 +1,53 @@
+题目描述
+输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+
+例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
+
+题目解析：这是个数字拼接的题目，拼接后可能会是一个很大的数造成溢出，而有效解决这个问题就是要把数字转换成字符串进行拼接，而且字符串拼接操作也很常用。
+
+两两比较进行组合，ab与ba比较大小。
+
+
+思路分析（1）判断所给数组是否为空； 
+
+        （2）获取数组长度，并新建StringBuilder对象进行拼接操作， 新建一个字符串数组str存放转换成字符串的数字；
+   
+        （3）利用Java的Comparator接口实现自定义排序Arrays.sort()
+   
+        （4）对排好序的str数组进行拼接，并返回字符串。
+
+
+代码实现：
+
+import java.util.*;
+import java.lang.StringBuilder;
+public class Solution {
+    public String PrintMinNumber(int [] numbers) {
+         if(numbers==null||numbers.length==0)
+             return "";
+         int len = numbers.length;
+         String []str = new String[len];
+         StringBuilder bd = new StringBuilder();
+         for(int i=0;i<len;i++)
+           str[i]= String.valueOf(numbers[i]);
+           Arrays.sort(str,new Comparator<String>() {
+                        public int compare(String s1,String s2)
+                        {
+                            String c1 = s1+s2;
+                            String c2 = s2+s1;
+                            return  c1.compareTo(c2);
+                        }
+                    });
+        for(int i=0;i<len;i++)
+        {
+            bd.append(str[i]);
+         }
+        return bd.toString();
+    }
+}
+           
+
+
+
+
+
